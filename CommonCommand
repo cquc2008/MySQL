@@ -1,1 +1,22 @@
-
+# Common Command
+'''
+# 常见MySQL命令
+    + show databases;       # 显示所有的数据库
+    + use sys;              # 打开指定的数据库
+    + show tables;          # 进入某个数据库后，显示该数据库内的所有表格
+    + show tables in sys；  # 显示数据库sys下的所有tables
+    + select database();    # 查询目前所在的数据库
+    + creat database test   # 新建数据库test
+    + create table stuinfo(id int, name varchar(20)); # 在当前数据库中创建一个表
+    + desc stuinfo;         # 显示指定表的结构
+    + select * from stutinfo; # 显示选定表格的数据
+    + insert into stuinfo (id,name) values(1,'zhangsan'); # 向指定表里添加数据
+    + update stuinfo set name='Jack' where id = 1; # 修改指定表格内指定位置的数据
+    + delete from stuinfo where id = 1;  # 删除指定表格内指定位置的数据
+    + select version();     # 查看数据据管理系统的版本
+    + mysql --version       # 未登录数据库的情况下，cmd中输入上述语句也可以查询MySQL的版本
+    
+    
+    
+    
+'''''
