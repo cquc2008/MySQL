@@ -1,0 +1,51 @@
+-- --------------------------------------------------
+-- 日期函数
+-- --------------------------------------------------
+# now ： 返回当前系统日期 + 时间
+select now();      # 返回字符型结果
+select now() + 0;  # 返回数值型结果
+
+
+# curdate ： 返回当前的日期
+select curdate();     # 返回字符型结果
+select curdate() + 0; # 返回数值型结果
+
+
+# curtime ： 返回当前的时间
+select curtime();     # 返回字符型结果
+select curtime() + 0; # 返回数值型结果
+
+
+# 用来获取指定的年、月、日、小时、分钟、秒的函数
+select year(now()); # 获取年
+select year('1991-01-12');
+
+select month(curdate()) ; # 获取月
+select monthname(curdate()); # 返回月的名称
+
+
+select day(now()); # 获取日信息
+
+select hour(now()); # 获取小时信息
+
+select minute(now()); # 获取分钟信息
+
+select secont(now()); # 获取秒信息
+
+
+
+# str_to_date : 将日期格式的字符转换成指定格式的日期
+select str_to_date('04/30/2020','%m/%d/%y'); # 小写y为两位表示年
+select str_to_date('04-30-1920','%m-%d-%Y'); # 大写Y 为四位表示年
+
+select *
+from employees
+where hire_date = str_to_date('04-03-1992','%c-%d-%Y');
+
+
+# date_format : 将日期转化为字符
+select date_format(str_to_date('01/31/2020','%c/%d/%Y'),'%Y年-%c月-%d日');
+select date_format(now(),'%Y年%m月%d日');
+
+select last_name, date_format(hire_date,'%m月%d日 %Y年')
+from employees;
