@@ -1,0 +1,92 @@
+-- ---------------------------
+-- 条件查询
+-- ---------------------------
+/*
+ 1. 语法
+    select
+            查询列表
+    from
+            表名
+    where
+            筛选条件
+
+ 2. 分类
+    + 按条件表达式筛选
+        * 条件运算符： '>' '<' '=' '<>'
+
+    + 按逻辑表达式筛选(逻辑运算符的作用就是连接条件表达式)
+        * '&&'，'and' : 如果两个条件都为True，则结果为True，否则为False
+        * '||', 'or' ：如果有一个条件为True，则结果为True，否则为 False
+        * '!', 'nor' ：如果连接的条件本身为False，结果为True，否则为 False
+
+    + 模糊查询
+        * like
+            特点：
+                - 一般和通配符搭配使用：
+                    。 “%” 代表任意多个字符，包含0个字符
+                    。 “_” 下划线仅代表一个字符
+        * between and
+            特点：
+                - 使用between and 可以提高语句的简洁度
+                - 该语句包含两边的临界值
+                - 该语句中两个临界值不能交换位置
+        * in
+            含义： 判断某字段的值是否属于in列表中的某一项
+            特点：
+                - 使用 in 提高语句的简介度
+                - in 列表的值类型必须一致或兼容
+                - in 列表中不支持 %，_ 等通配符
+        * is null / is not null
+            特点：
+                - '='无法用来判断 null 值，只能用 is null 语句判断
+                - '<>' 不能用于判断 null 值， 只能用 is not null 语句判断
+
+ */
+# 按条件表达式筛选
+use employees;
+select database();
+
+select * from employees where salary > 12000;
+
+select first_name, department_id from employees where department_id <> 90;
+
+# 按逻辑表达式筛选
+select last_name, salary, commission_pct from employees where salary > 10000 and salary < 20000;
+
+select * from employees where not(department_id >= 90 and department_id <=110) or salary > 15000;
+
+
+# 模糊查询
+# like
+select * from employees where last_name like '%a%';  # % 为通配符
+select last_name,salary from employees where last_name like '__n_l%';
+select last_name from employees where last_name like '_\_%';
+select last_name from employees where last_name like '_$_%' escape '$';  # 通过escape指定任意字符做通配符
+
+# between and
+select * from employees where employee_id >= 100 and employee_id <=120;
+select * from employees where employee_id between 100 and 120;
+
+# in
+select last_name,job_id from employees where job_id in ('it_prog', 'ad_vp', 'ad_pres');
+
+# is null / is not null
+select last_name, commission_pct from employees where commission_pct is null;
+
+
+#----------------------------------------------------------------------------------------------------------------
+# 案例
+
+select last_name,department_id,salary * 12 *(1+ifnull(commission_pct,0)) as annul_salary from employees where employee_id = 176;
+
+select last_name,salary from employees where not(salary between 5000 and 12000);
+
+select last_name, department_id from employees where department_id in (20,50);
+
+select last_name,job_id from employees where manager_id is null;
+
+select last_name from employees where last_name like '__a%';
+
+select last_name from employees where last_name like '%a%' and last_name like '%e%';
+
+select * from employees where first_name like '%e';
