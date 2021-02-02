@@ -1,0 +1,35 @@
+-- ----------------------------------------------------------------------------
+-- 数学函数
+-- ----------------------------------------------------------------------------
+# round 四舍五入
+select round(1.26);
+select round(1.62);
+select round(-1.26);
+select round(-1.62);
+
+select round(1.295,1);
+select round(1.297,2);
+select round(1.297,0);
+select round(22.56,-1);
+
+
+# ceil : 向上取整,返回大于等于该参数的最小整数
+select ceil(1.24);
+select ceil(-1.24);
+
+
+# floor : 向下取整
+select floor(1.95);
+select floor(-1.95);
+
+
+# truncate : 截断
+select truncate(1.93521,3);
+
+
+# mod: 取模 或者 取余; 被除数为正则结果为正，被除数为负则结果为负
+select mod(10,3);
+select mod(-10,3);
+select mod(-10,-3);
+
+select 10%3;
