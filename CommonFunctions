@@ -78,6 +78,8 @@
         * version
         * database
         * user
+	* password
+	* md5
     - 控制函数
         * if
         * case
