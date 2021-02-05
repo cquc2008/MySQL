@@ -46,6 +46,14 @@ create table jobs(
     max_salary int(16));
 show tables;
 desc jobs;
+                   
+USE employees;
+CREATE TABLE job_grades(
+	grade_level VARCHAR(3),
+	lowest_sal  INT,
+	highest_sal INT
+);
+
 
 
 -- ----------------------------
@@ -242,3 +250,16 @@ INSERT INTO `jobs` VALUES ('SA_REP', 'Sales Representative', 6000, 12000);
 INSERT INTO `jobs` VALUES ('SH_CLERK', 'Shipping Clerk', 2500, 5500);
 INSERT INTO `jobs` VALUES ('ST_CLERK', 'Stock Clerk', 2000, 5000);
 INSERT INTO `jobs` VALUES ('ST_MAN', 'Stock Manager', 5500, 8500);
+                   
+                   
+                   
+-- ----------------------------
+-- Records of job_grades
+-- ----------------------------                  
+INSERT INTO job_grades VALUES ('A', 1000, 2999);
+INSERT INTO job_grades VALUES ('B', 3000, 5999);
+INSERT INTO job_grades VALUES('C', 6000, 9999);
+INSERT INTO job_grades VALUES('D', 10000, 14999);
+INSERT INTO job_grades VALUES('E', 15000, 24999);
+INSERT INTO job_grades VALUES('F', 25000, 40000);
+
