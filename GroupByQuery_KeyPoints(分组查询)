@@ -1,0 +1,123 @@
+/* 查询：分组查询
+     - 分组查询
+        * 语法：
+            select  分组函数，列（要求出现在group by 的后面）
+            from    表名
+            【where 筛选条件】
+            group by 分组的列表
+            【order by 子句】
+        # 注意：查询列表必须特殊，要求是分组函数和group by 后出现的字段
+        * 特点
+            。 分组前筛选： 数据源为原始表，放在group by 子句前
+            。 分组后筛选： 数据源不是原始表，而是分组后的结果集，放在group by 子句后
+            。 能用分组前筛选的，就优先考虑使用分组前筛选
+
+        * group by 子句支持单个字段分组，多个字段分组（多个字段之间用逗号隔开，没有顺序要求）；也支持表达式或函数分组（不太经常使用）
+        * 也可以添加排序语句（排序语句放在整个的分组查询的最后）
+
+
+    
+ */
+
+
+
+
+-- -------------------------------------------------------------------------
+-- 分组查询
+-- -------------------------------------------------------------------------
+# select avg(salary) from employees;
+# 查询每个工种的最高工资
+
+select max(salary),job_id
+from employees
+group by job_id;
+
+
+# 查询每个位置上的部门个数
+select count(*),location_id
+from departments
+group by location_id;
+
+
+# 添加简单筛选条件（添加分组前的筛选条件）
+# 查询邮箱中包含a字符的每个部门的平均工资
+select avg(salary),department_id, email
+from employees
+where email like '%a%'
+group by department_id;
+
+# 查询有奖金的每个领导手下员工的最高工资
+select max(salary),manager_id
+from employees
+where commission_pct is not null
+group by manager_id;
+
+
+# 添加复杂的筛选条件(添加分组后的筛选条件)
+# 查询哪个部门的员工个数大于2
+select count(*) as num_emp,department_id
+from employees
+group by department_id
+having num_emp>2;
+
+
+# 查询每个工种有奖金的员工的最高工资大于12000的工种编号和最高工资
+select job_id,max(salary)
+from employees
+where commission_pct is not null
+group by job_id
+having max(salary)>12000;
+
+
+# 查询领导编号大于102的每个领导手下的最低工资大于5000的领导编号是哪个，以及其最低工资
+select manager_id,min(salary)
+from employees
+where manager_id > 102
+group by manager_id
+having min(salary)>5000;
+
+
+# 按照表达式或函数分组
+# 按员工姓名的长度分组，查询每一组员工个数，筛选员工个数大于5的有哪些
+select count(*),length(last_name)
+from employees
+group by length(last_name)
+having count(*)>5;
+
+
+# 按多个字段分组
+# 查询每个部门每个工种的员工的平均工资
+select avg(salary),department_id,job_id
+from employees
+group by department_id,job_id;
+
+
+# 增加排序功能
+# 查询每个部门每个工种的员工的平均工资，并按升序排列
+select avg(salary),department_id,job_id
+from employees
+where department_id is not null
+group by department_id,job_id
+order by avg(salary);
+
+select max(salary),min(salary),avg(salary),sum(salary),job_id
+from employees
+group by job_id
+order by job_id;
+
+
+select max(salary) - min(salary) as difference
+from employees;
+
+# 查询各个管理者手下员工的最低工资，其中最低工资不低于6000，没有管理者的员工不计算在内
+select min(salary),manager_id
+from employees
+where manager_id is not null
+group by manager_id
+having min(salary)>=6000;
+
+# 查询所有部门的编号，员工数量和工资平均值，并按平均工资降序排列
+select department_id,avg(salary),count(*)
+from employees
+group by department_id
+order by avg(salary) desc;
